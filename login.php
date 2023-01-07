@@ -9,23 +9,6 @@ if ( isset($_POST["login"])){
     //$name = $_POST['name'];
     //$position = $_POST['position'];
 
-	if (empty($username)) {
-        echo "<script>
-                alert('Username is required');
-                document.location.href = 'index.html'
-                </script>";	
-                exit();
-            }
-    else if(empty($password)){
-        echo "<script>
-                alert('Password is required');
-                document.location.href = 'index.html'
-                </script>";	
-                exit();
-    
-    }
-    else{
-
        // mysqli_query($conn, "SELECT * FROM users WHERE username='$username' AND password ='$password'");
         //return mysqli_affected_rows($conn);
 
@@ -75,11 +58,11 @@ if ( isset($_POST["login"])){
             </script>";	
             exit();
 		}
-	}
+	
 	
 }else{
 	echo "<script>
-    alert('Incorect Username or Password!');
+    alert('Error!');
     document.location.href = 'index.html';
     </script>";	
     exit();
