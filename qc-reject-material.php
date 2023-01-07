@@ -2,6 +2,7 @@
 <?php
     ob_start();
 
+    // Create connection
     $sname= "localhost";
     $unmae= "root";
     $password = "";
@@ -10,7 +11,7 @@
 
     $conn = mysqli_connect($sname, $unmae, $password, $db_name);
 
-
+    // Check connection
     if (!$conn) {
         die ("Connection failed!");
     }
@@ -54,23 +55,7 @@
         }else{
             $error  = "Delete error";
         }
-    }
-
-    
-    // Export FUNCTION
-    if (isset($_POST['export'])) {
-        $data   = $_POST['data'];
-        if ($data == "--"){
-            $error  = "Please select Export Data";  
-        }
-        else{
-            header("Location: ".$data.".php");
-            
-
-        }
-                                                
-    }
-                                        
+    }                                       
 
     // EDIT FUNCTION
     if ($op == 'edit') {
@@ -140,9 +125,11 @@
                     $error  = "Update error";
                 }
             }
-            //Inster Data
+            //Insert Data
             else { 
-                $sql1   = "INSERT INTO raw_data_reject values ('', '$date', '', '', '$part_name', '', '', '$problem', '$note', '$location', '$qty', '$date_to_whs')";
+                $sql1   = "INSERT INTO raw_data_reject values
+                            ('', '$date', '', '', '$part_name', '', '', '$problem', '$note',
+                            '$location', '$qty', '$date_to_whs')";
                 $q1     = mysqli_query($conn, $sql1);
 
                 $sql4           = "SELECT * FROM master_part where part_name = '$part_name'";
@@ -214,24 +201,8 @@
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>  
 
   <!-- Table -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
-
-
-  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
-
-
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script> 
-
-
-  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">  
   
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -464,7 +435,9 @@
                                                 <div class="mb-1 row">
                                                     <label for="part_name" class="col-sm-12 col-form-label">Part Name</label>
                                                     <div class="col-sm-12">
-                                                        <input type="text" class="form-control form-control-sm" id="part_name" name="part_name" value="<?php echo $part_name ?>">
+                                                        <input id="part_name" name="part_name"
+                                                                type="text" class="form-control form-control-sm" 
+                                                                value="<?php echo $part_name ?>">
                                                         
                                                         <?php
                                                         $sql3 = "SELECT part_name FROM master_part ORDER BY part_name ASC";
@@ -637,39 +610,16 @@
                                         <!-- End Input Group -->
 
                                         <!-- Filter Button -->
-                                        <div class="col-md-2 col-lg-2 d-flex flex-row align-items-end">        
-                                            <input type="submit" id="filter" name="filter" value="Filter" class=" mb-1 btn btn-sm btn-submit col-3 col-md-12 col-lg-12" />
+                                        <div class="col-md-2 col-lg-2 col-xl-1 d-flex align-items-end">        
+                                            <input type="submit" id="filter" name="filter" value="Filter" class=" mb-1 btn btn-sm btn-primary col-3 col-md-12 col-lg-12" />
                                         </div>
                                         <!-- Filter Button -->
 
                                         <!-- Clear Button -->
-                                        <div class="col-md-2 col-lg-2 d-flex flex-row align-items-end">        
+                                        <div class="col-md-2 col-lg-2 col-xl-1 d-flex flex-row align-items-end">        
                                             <input type="submit" id="filter" name="clear" value="Clear" class=" mb-1 btn btn-sm btn-danger col-3 col-md-12 col-lg-12" />
                                         </div>
-                                        <!-- Clear Button -->
-
-                                        <!-- Input Group -->
-                                        <!-- <div class="col-md-3 col-lg-3">        
-                                             Input Item 
-                                            <div class="mb-1 row">
-                                                <label for="part_name" class="col-sm-12 col-form-label">Data</label>
-                                                    <div class="col-sm-12">
-                                                        <select class="form-control form-control-sm" name="data" id="data">
-                                                            <option selected>--</option>
-                                                            <option value="raw">Raw Data</option>
-                                                            <option value="rekap">Rekap</option>
-                                                        </select>
-                                                    </div>
-                                            </div>
-                                             End Input Item
-                                        </div>
-                                        <End Input Group
-
-                                         Export Button
-                                        <div class="col-md-2 col-lg-1 d-flex flex-row align-items-end">        
-                                            <input type="submit" id="export" name="export" value="Export" class=" mb-1 btn btn-sm btn-submit col-3 col-md-12 col-lg-12" />
-                                        </div>
-                                         Export Button -->                                       
+                                        <!-- Clear Button -->                                     
 
            
                                     </div>
@@ -678,7 +628,7 @@
 
                                 <!-- Table Content -->
                                 <div class="table-responsive-lg">                                
-                                    <table id="reject_table" class="table-sm display nowrap table-hover">
+                                    <table id="reject_table" class="table table-sm display nowrap table-hover">
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
@@ -708,11 +658,11 @@
                                                 $supfil         = $_POST['supfil'];
 
                                                 if (empty($from && $to)){
-                                                    $sql2   = "SELECT * FROM raw_data_reject where supplier = '".$supfil."' ORDER BY id DESC";                                                    
+                                                    $sql2   = "SELECT * FROM raw_data_reject where supplier = '".$supfil."' ORDER BY date ASC";                                                    
                                                 }
 
                                                 elseif (empty($supfil)){
-                                                    $sql2   = "SELECT * FROM raw_data_reject where date BETWEEN '".$from."' AND '".$to."' ORDER BY id DESC";
+                                                    $sql2   = "SELECT * FROM raw_data_reject where date BETWEEN '".$from."' AND '".$to."' ORDER BY date ASC";
                                                 }
 
                                                 else{
@@ -745,7 +695,7 @@
                                             ?>
                                                 <tr>
                                                     <td scope="row">
-                                                        <a href="qc-reject-material.php?op=edit&id=<?php echo $id ?>"><button type="button" class="btn btn-sm btn-warning">Edit</button></a>
+                                                        <a href="qc-reject-material.php?op=edit&id=<?php echo $id?>"><button type="button" class="btn btn-sm btn-warning">Edit</button></a>
                                                         <a href="qc-reject-material.php?op=delete&id=<?php echo $id?>" onclick="return confirm('Are you sure you want to delete the data?')"><button type="button" class="btn btn-sm btn-danger">Delete</button></a>            
                                                     </td>
                                                     <th scope="row"><?php echo $order++ ?></th>
@@ -795,36 +745,57 @@
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/js/datepicker-full.min.js"></script>
 
     <script>
-    const getDatePickerTitle = elem => {
-    // From the label or the aria-label
-    const label = elem.nextElementSibling;
-    let titleText = '';
-    if (label && label.tagName === 'LABEL') {
-        titleText = label.textContent;
-    } else {
-        titleText = elem.getAttribute('aria-label') || '';
-    }
-    return titleText;
-    }
-
     const elems = document.querySelectorAll('.datepicker_input');
     for (const elem of elems) {
     const datepicker = new Datepicker(elem, {
         'format': 'yyyy/mm/dd',
-        title: getDatePickerTitle(elem)
+        
     });
     }      
     </script>
 
     <!--Table -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
     
     <script>
     $(document).ready(function () {
     $('#reject_table').DataTable({
         dom: 'Blfrtip',
-        scrollY: 500,
+        buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    className: 'btn_excel',
+                    title: 'Raw Data Reject Material',
+                    text:'Export to Excel' 
+                },
+                {
+                    extend: 'csvHtml5', 
+                    className: 'btn_csv', 
+                    title: 'Raw Data Reject Material',               
+                    text: 'Export to CSV' 
+                },
+                {
+                    extend: 'pdfHtml5',
+                    className: 'btn_pdf',
+                    title: 'Raw Data Reject Material',
+                    text: 'Export to PDF' 
+                },
+	    ],
+        scrollY: 430,
         scrollX: true,
     });
+        $('.btn_excel').attr("class","btn btn-success btn-sm mb-3");
+        $('.btn_pdf').attr("class","btn btn-primary btn-sm mb-3");
+        $('.btn_csv').attr("class","btn btn-primary btn-sm mb-3");
     });    
     </script>
 
@@ -836,8 +807,10 @@
         data:<?php echo json_encode($data1); ?>,
         maximumItems:10,
         highlightTyped:true,
-        highlightClass : 'fw-bold text-primary'
+        highlightClass : 'fw-bold text-primary',
+
     }); 
+    $('.btn_excel').attr("class","w-50");
     </script>
 
     <script>
@@ -858,14 +831,14 @@
     }); 
     </script>
 
-    <script>
+    <!-- <script>
     // var tableHTML = document.getElementById("reject_table").innerHTML;
     // window.localStorage["sharedTable"] = tableHTML;
 
     var tableContent = document.getElementById("reject_table").innerHTML;
     localStorage.setItem('tableContent', tableContent);
 
-    </script>   
+    </script>    -->
 
 
     <!-- Template Main JS File -->
