@@ -126,22 +126,8 @@
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>  
 
   <!-- Table -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
-
-
-  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
-
-
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
-  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
-  
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" rel="stylesheet">  
   
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
@@ -486,13 +472,47 @@
     <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
     <!--Table -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+
     <script>
     $(document).ready(function () {
     $('#master_part_table').DataTable({
         dom: 'Blfrtip',
-        scrollY: 500,
-        scrollX: false,
+        buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    className: 'btn_excel',
+                    title: 'Master Part',
+                    text:'Export to Excel' 
+                },
+                {
+                    extend: 'csvHtml5', 
+                    className: 'btn_csv', 
+                    title: 'Master Part',               
+                    text: 'Export to CSV' 
+                },
+                {
+                    extend: 'pdfHtml5',
+                    className: 'btn_pdf',
+                    title: 'Master Part',
+                    text: 'Export to PDF' 
+                },
+	    ],
+        scrollY: 430,
+        scrollX: true,
     });
+        $('.btn_excel').attr("class","btn btn-success btn-sm mb-3");
+        $('.btn_pdf').attr("class","btn btn-primary btn-sm mb-3");
+        $('.btn_csv').attr("class","btn btn-primary btn-sm mb-3");
     });    
     </script>
 
