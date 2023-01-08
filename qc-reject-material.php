@@ -290,10 +290,10 @@
 			<div class="col-auto px-0 max-vh-100">
 				<!-- Sidebar Section-->
 				<div id="sidebar" class="navbar-nav navbar-expand-md bg-light">
-					<div id="sidebar" class="collapse navbar-collapse collapse-horizontal min-vh-100 border-end border-0 rounded-0">
+					<div id="sidebar" class="collapse navbar-collapse collapse-horizontal border-end border-0 rounded-0">
 						
 						<!-- Sidebar Content -->                        
-						<ul class="px-2 pt-2 min-vh-100">
+						<ul class="px-2 pt-2">
 							<li class="px-2 pt-2">
 								<div class="accordion" id="accordionExample">
 
@@ -362,7 +362,7 @@
 
 
                 <!-- Main Section-->
-                <div class="col ps-md-3 max-vh-100" data-aos="fade" data-aos-delay="100">
+                <div class="col ps-md-3" data-aos="fade" data-aos-delay="100">
                     <!-- Header-->  
                     <div class="page-header pt-3">
                         <h2>Reject Material</h2>
